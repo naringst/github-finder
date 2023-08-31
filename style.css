@@ -205,3 +205,15 @@ header > h2 {
   border: none;
   border-radius: 10px;
 }
+
+footer {
+  height: 120px;
+  width: 100%;
+  background-color: #ebedf5;
+  text-align: center;
+}
+
+footer p {
+  line-height: 120px;
+  color: #4b4858;
+}
