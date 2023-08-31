@@ -45,7 +45,7 @@ header > h2 {
   height: 48px;
   border-radius: 10px;
   border: 1px solid #d9d9d9;
-  padding: 10px;
+  padding: 10px 20px;
   font-size: 20px;
 }
 
@@ -194,6 +194,7 @@ header > h2 {
 
 .buttons {
   display: flex;
+  margin-right: 31px;
 }
 
 .buttons button {
