@@ -14,11 +14,11 @@ function UserProfile(name, company, blog, location, date) {
   this.date = date;
 }
 
-function UserSocial(publicRepos, publicGists, Followers, Following) {
+function UserSocial(publicRepos, publicGists, followers, following) {
   this.publicRepos = publicRepos;
   this.publicGists = publicGists;
-  this.Followers = Followers;
-  this.Following = Following;
+  this.followers = followers;
+  this.following = following;
 }
 
 function UserRepos(link, stars, watchers, forks) {
@@ -52,6 +52,22 @@ function setUserProfile(userObject) {
   $location.textContent = `위치 : ${userObject.location}`;
 }
 
+function setUserSocial(userSocial) {
+  const $publicRepos = document.querySelector(".profile-info-buttons > .blue");
+  $publicRepos.textContent = `Public Repos : ${userSocial.publicRepos}`;
+
+  const $publicGists = document.querySelector(".profile-info-buttons > .gray");
+  $publicGists.textContent = `Public Gists : ${userSocial.publicGists}`;
+
+  const $followers = document.querySelector(".profile-info-buttons > .green");
+  $followers.textContent = `Followers : ${userSocial.followers}`;
+
+  const $following = document.querySelector(
+    ".profile-info-buttons > .bluegreen"
+  );
+  $following.textContent = `Following : ${userSocial.following}`;
+}
+
 async function fetchGithubUserInfo(userName) {
   const response = await fetch(`http://api.github.com/users/${userName}`);
   const user = await response.json().then((res) => {
@@ -69,11 +85,22 @@ async function fetchGithubUserInfo(userName) {
       res["followers"],
       res["following"]
     );
+
     setUserProfile(user);
     setProfileImage(res["avatar_url"]);
+    setUserSocial(userSocial);
   });
   return user;
 }
 
+function showProfile() {
+  const $nowImg = document.querySelector(".profile img");
+  const nowURL = $nowImg.src;
+  window.open(nowURL, "_프로필");
+}
+
 const $searchButton = document.querySelector(".search-div > button");
 $searchButton.addEventListener("click", getInputValue);
+
+const $profileShowButton = document.querySelector(".profile > button");
+$profileShowButton.addEventListener("click", showProfile);
