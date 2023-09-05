@@ -212,9 +212,15 @@ footer {
   width: 100%;
   background-color: #ebedf5;
   text-align: center;
+  position: absolute;
+  bottom: 0;
 }
 
 footer p {
   line-height: 120px;
   color: #4b4858;
+}
+
+section {
+  display: none;
 }
