@@ -224,3 +224,13 @@ footer p {
 section {
   display: none;
 }
+
+.not-found-text {
+  font-size: 30px;
+  font-weight: 500;
+  margin: 50px auto;
+}
+
+.not-found {
+  border: none;
+}
