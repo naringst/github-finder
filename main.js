@@ -31,9 +31,7 @@ function UserRepos(link, stars, watchers, forks) {
 function getInputValue() {
   const $input = document.getElementsByTagName("input")[0];
   const inputValue = $input.value;
-
   const userInfo = fetchGithubUserInfo(inputValue);
-
   setProfileImage(userInfo["avatar_url"]);
 }
 
@@ -70,6 +68,20 @@ function setUserSocial(userSocial) {
 
 async function fetchGithubUserInfo(userName) {
   const response = await fetch(`http://api.github.com/users/${userName}`);
+  if (response.status == "200") {
+    const $section = document.querySelector(".found");
+    $section.style.display = "block";
+
+    const $notfound = document.querySelector(".not-found");
+    $notfound.style.display = "none";
+  } else {
+    const $section = document.querySelector(".found");
+    $section.style.display = "none";
+
+    const $notfound = document.querySelector(".not-found");
+    $notfound.style.display = "block";
+  }
+
   const user = await response.json().then((res) => {
     console.log(res);
     const user = new UserProfile(
@@ -86,11 +98,12 @@ async function fetchGithubUserInfo(userName) {
       res["following"]
     );
 
+    console.log(res["repos_url"]);
+
     setUserProfile(user);
     setProfileImage(res["avatar_url"]);
     setUserSocial(userSocial);
   });
-  return user;
 }
 
 function showProfile() {
@@ -104,3 +117,9 @@ $searchButton.addEventListener("click", getInputValue);
 
 const $profileShowButton = document.querySelector(".profile > button");
 $profileShowButton.addEventListener("click", showProfile);
+
+async function fetchRepoData(userName, userRepo) {
+  const repoData = await fetch(
+    `http://api.github.com/users/${userName}/${userRepo}`
+  );
+}
