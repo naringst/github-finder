@@ -10,9 +10,13 @@
 
 검색은 1. 검색 버튼을 통해서 2. 엔터 버튼을 활용해 가능합니다.
 
-//영상1
+2.
+https://github.com/naringst/github-finder/assets/92130993/4ba8c0d2-a3df-41f6-a3a8-c26e40ddb236
 
-//영상2
+2. 
+
+https://github.com/naringst/github-finder/assets/92130993/86d028a1-2f1d-43ba-8adc-a9dc1ec58ed3
+
 
 검색 시 **github api**를 활용해 해당 사용자의 정보를 fetch합니다.
 fetch해오는 정보는 다음과 같습니다.
@@ -20,6 +24,10 @@ fetch해오는 정보는 다음과 같습니다.
 ### 1. 프로필사진
 
 프로필 사진을 가져오며, 프로필보기 버튼을 누르면 프로필 사진을 더 큰 사이즈로 확인할 수 있습니다.
+
+
+https://github.com/naringst/github-finder/assets/92130993/7948d377-eb2e-4030-b7a9-c024e6f4d0c0
+
 
 ### 2. 사용자 주요 정보
 
