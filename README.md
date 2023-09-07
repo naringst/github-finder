@@ -9,9 +9,12 @@
 
 ### 검색 방법 
 1. 검색 버튼을 통해서
+   
 https://github.com/naringst/github-finder/assets/92130993/4ba8c0d2-a3df-41f6-a3a8-c26e40ddb236
 
 2. 엔터 버튼을 활용해 가능합니다.
+
+
 https://github.com/naringst/github-finder/assets/92130993/86d028a1-2f1d-43ba-8adc-a9dc1ec58ed3
 
 <br/>
