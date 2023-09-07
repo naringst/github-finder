@@ -21,8 +21,9 @@ function UserSocial(publicRepos, publicGists, followers, following) {
   this.following = following;
 }
 
-function UserRepos(link, stars, watchers, forks) {
-  this.link = link;
+function UserRepos(name, stars, watchers, forks) {
+  this.name = name;
+
   this.stars = stars;
   this.watchers = watchers;
   this.forks = forks;
@@ -31,8 +32,7 @@ function UserRepos(link, stars, watchers, forks) {
 function getInputValue() {
   const $input = document.getElementsByTagName("input")[0];
   const inputValue = $input.value;
-  const userInfo = fetchGithubUserInfo(inputValue);
-  setProfileImage(userInfo["avatar_url"]);
+  return inputValue;
 }
 
 function setProfileImage(url) {
@@ -66,7 +66,8 @@ function setUserSocial(userSocial) {
   $following.textContent = `Following : ${userSocial.following}`;
 }
 
-async function fetchGithubUserInfo(userName) {
+async function fetchGithubUserInfo() {
+  const userName = getInputValue();
   const response = await fetch(`http://api.github.com/users/${userName}`);
   if (response.status == "200") {
     const $section = document.querySelector(".found");
@@ -82,6 +83,9 @@ async function fetchGithubUserInfo(userName) {
     $notfound.style.display = "block";
   }
 
+  const $footer = document.querySelector("footer");
+  $footer.style.position = "relative";
+
   const user = await response.json().then((res) => {
     console.log(res);
     const user = new UserProfile(
@@ -91,14 +95,14 @@ async function fetchGithubUserInfo(userName) {
       res.location
     );
 
+    setProfileImage(res["avatar_url"]);
+
     const userSocial = new UserSocial(
       res["public_repos"],
       res["public_gists"],
       res["followers"],
       res["following"]
     );
-
-    console.log(res["repos_url"]);
 
     setUserProfile(user);
     setProfileImage(res["avatar_url"]);
@@ -112,14 +116,70 @@ function showProfile() {
   window.open(nowURL, "_프로필");
 }
 
+function makeRepo(repoObject) {
+  const $repoDiv = document.createElement("div");
+  $repoDiv.className = "repo";
+
+  const $repoName = document.createElement("p");
+  $repoName.textContent = repoObject["name"];
+
+  const $repoContainer = document.querySelector(".repos-container");
+
+  $repoDiv.appendChild($repoName);
+  $repoContainer.appendChild($repoDiv);
+
+  const $repoButtonDiv = document.createElement("div");
+  $repoButtonDiv.className = "buttons";
+
+  const $repoStars = document.createElement("button");
+  $repoStars.className = "blue";
+  $repoStars.textContent = `Stars : ${repoObject.stars}`;
+
+  const $repoWatachers = document.createElement("button");
+  $repoWatachers.className = "gray";
+  $repoWatachers.textContent = `Watchers : ${repoObject.watchers}`;
+
+  const $repoForks = document.createElement("button");
+  $repoForks.className = "green";
+  $repoForks.textContent = `Forks : ${repoObject.forks}`;
+
+  $repoButtonDiv.appendChild($repoStars);
+  $repoButtonDiv.appendChild($repoWatachers);
+  $repoButtonDiv.appendChild($repoForks);
+
+  $repoDiv.appendChild($repoButtonDiv);
+}
+
+async function fetchRepoData() {
+  const user = getInputValue();
+
+  const repoData = await fetch(`http://api.github.com/users/${user}/repos`);
+  const repoRes = await repoData.json().then((res) =>
+    res.slice(0, 3).forEach((r, idx) => {
+      const userRepoInfo = new UserRepos(
+        r.name,
+        r["stargazers_count"],
+        r.forks,
+        r.watchers
+      );
+      makeRepo(userRepoInfo);
+    })
+  );
+}
+
+//event listener
+
 const $searchButton = document.querySelector(".search-div > button");
-$searchButton.addEventListener("click", getInputValue);
+$searchButton.addEventListener("click", fetchGithubUserInfo);
+$searchButton.addEventListener("click", fetchRepoData);
+
+const $inputBlank = document.querySelector(".search-div > input");
+$inputBlank.addEventListener("keyup", function (event) {
+  if (event.code === "Enter") {
+    fetchGithubUserInfo();
+    fetchRepoData();
+  }
+});
 
 const $profileShowButton = document.querySelector(".profile > button");
 $profileShowButton.addEventListener("click", showProfile);
-
-async function fetchRepoData(userName, userRepo) {
-  const repoData = await fetch(
-    `http://api.github.com/users/${userName}/${userRepo}`
-  );
-}
