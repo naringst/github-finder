@@ -29,4 +29,4 @@ fetch해오는 정보는 다음과 같습니다.
 ### 3. 주요 리포지토리
 
 사용자의 주요 리포지토리 정보를 보여줍니다. 리포지토리 이름, star 수, watcher 수, fork 수를 보여줍니다.
-![repo-info](assets/repoInfoß.png)
+![repo-info](assets/repoInfo.png)
