@@ -212,7 +212,7 @@ footer {
   width: 100%;
   background-color: #ebedf5;
   text-align: center;
-  position: relative;
+  position: absolute;
   bottom: 0;
 }
 
